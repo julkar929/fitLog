@@ -49,10 +49,10 @@ export default function WorkoutDetailPage() {
     return (
       <div className="mx-auto max-w-2xl px-5 py-24 text-center">
         <h1 className="font-display text-2xl font-bold uppercase text-text">
-          Workout not found
+          notFound();
         </h1>
         <p className="mt-2 text-text-muted">
-          This lift doesn&apos;t exist or was removed.
+          This workout doesn&apos;t exist or was removed.
         </p>
         <Link
           href="/"
