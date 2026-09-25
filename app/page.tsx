@@ -1,8 +1,11 @@
+import Navbar from "@/components/Navbar";
 import { getAllWorkouts } from "@/lib/api";
 
 export default async function Home() {
   const workouts = await getAllWorkouts();
   return (
+    <>
+    <Navbar />
     <div className="p-10 text-shadow-green-400">
       <h1 className="text-4xl font-bold">Found {workouts.length} workouts</h1>
       <div className="mt-4 space-y-2">
@@ -16,5 +19,6 @@ export default async function Home() {
         ))}
       </div>
     </div>
+    </>
   );
 }
