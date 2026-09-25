@@ -9,7 +9,7 @@ export default function Navbar() {
 
   const linkClass = (href: string) =>
     `text-sm font-semibold tracking-wide transition-colors ${
-      pathname === href ? "text-accent" : "text-gray-300 hover:text-white"
+      pathname === href ? "text-accent" : "text-text-secondary hover:text-text"
     }`;
 
   return (
@@ -18,7 +18,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.png" alt="FitLog logo" width={28} height={28} />
-          <span className="font-display text-lg font-bold tracking-wide text-white">
+          <span className="font-display text-lg font-bold tracking-wide text-text">
             FITLOG
           </span>
         </Link>
@@ -38,7 +38,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/my-plan"
-            className="rounded-full border border-gray-500 px-3 py-1 text-xs font-bold text-gray-200"
+            className="rounded-full border border-base-border px-3 py-1 text-xs font-bold text-text-secondary"
           >
             Saved 0
           </Link>

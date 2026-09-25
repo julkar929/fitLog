@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap");
+
+@theme {
+  /* Primary Accent */
+  --color-accent: #00e5ff;
+
+  /* Background */
+  --color-base: #05090b;
+  --color-base-soft: #0b1215;
+  --color-base-card: #111b20;
+
+  /* Border */
+  --color-base-border: #243238;
+
+  /* Text */
+  --color-text: #ffffff;
+  --color-text-secondary: #d7e3e7;
+  --color-text-muted: #94a3a8;
+
+  /* Fonts */
+  --font-display: "Oswald", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* Base styles */
+html, body {
+  background-color: var(--color-base);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+/* Animations */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-toast-in { animation: toast-in 0.25s ease-out; }
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 1s linear infinite; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-base); }
+::-webkit-scrollbar-thumb { background: var(--color-base-border); border-radius: 4px; }
