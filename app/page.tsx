@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { getAllWorkouts } from "@/lib/api";
 
@@ -19,6 +20,7 @@ export default async function Home() {
         ))}
       </div>
     </div>
+    <Footer />
     </>
   );
 }
