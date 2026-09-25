@@ -8,6 +8,7 @@ import { ClipboardPlus, Bookmark, ArrowLeft } from "lucide-react";
 import Loader from "@/components/Loader";
 import { getWorkoutById } from "@/lib/api";
 import { Workout } from "@/lib/types";
+import { usePlan } from "@/context/PlanContext";
 
 const SPEC_ROWS: { key: keyof Workout; label: string; suffix?: string }[] = [
   { key: "equipment", label: "EQUIPMENT" },
@@ -24,7 +25,8 @@ export default function WorkoutDetailPage() {
   const [workout, setWorkout] = useState<Workout | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-
+  const { addToPlan, addToSaved } = usePlan();
+  
   useEffect(() => {
     let active = true;
     getWorkoutById(params.id)
@@ -147,14 +149,14 @@ export default function WorkoutDetailPage() {
           {/* CTA Buttons */}
           <div className="mt-8 flex flex-wrap gap-3">
             <button
-              onClick={() => alert(`Added "${workout.name}" to today's plan`)}
+              onClick={() => addToPlan(workout)}
               className="flex items-center gap-2 rounded-md bg-accent px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-black transition-transform hover:scale-105"
             >
               <ClipboardPlus size={18} />
               Add to today&apos;s plan
             </button>
             <button
-              onClick={() => alert(`Saved "${workout.name}" for later`)}
+              onClick={() => addToSaved(workout)}
               className="flex items-center gap-2 rounded-md border border-base-border px-5 py-3 font-display text-sm font-bold uppercase tracking-wide text-text-secondary transition-colors hover:border-accent hover:text-accent"
             >
               <Bookmark size={18} />

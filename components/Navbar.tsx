@@ -3,9 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { usePlan } from "@/context/PlanContext";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { plan, saved } = usePlan();
 
   const linkClass = (href: string) =>
     `text-sm font-semibold tracking-wide transition-colors ${
@@ -34,13 +36,13 @@ export default function Navbar() {
             href="/my-plan"
             className="rounded-full bg-accent px-3 py-1 text-xs font-bold text-black"
           >
-            Plan 0
+            Plan {plan.length > 0 && `(${plan.length})`}
           </Link>
           <Link
             href="/my-plan"
             className="rounded-full border border-base-border px-3 py-1 text-xs font-bold text-text-secondary"
           >
-            Saved 0
+            Saved {saved.length > 0 && `(${saved.length})`}
           </Link>
         </div>
       </div>
