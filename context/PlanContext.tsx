@@ -1,8 +1,11 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { PlanItem, Workout } from "@/lib/types";
+import { useToast } from "./ToastContext";
 
+const PLAN_KEY = "fitlog:plan";
+const SAVED_KEY = "fitlog:saved";
 const PLAN_CAP = 5;
 
 interface PlanContextValue {
@@ -17,9 +20,44 @@ interface PlanContextValue {
 
 const PlanContext = createContext<PlanContextValue | null>(null);
 
+{/* read from localStorage */}
+function readStorage(key: string): PlanItem[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+
 export function PlanProvider({ children }: { children: ReactNode }) {
   const [plan, setPlan] = useState<PlanItem[]>([]);
   const [saved, setSaved] = useState<PlanItem[]>([]);
+  const [hydrated, setHydrated] = useState(false);
+  const { showToast } = useToast();
+  
+   {/* read from localStorage 1st time */}
+  useEffect(() => {
+    setPlan(readStorage(PLAN_KEY));
+    setSaved(readStorage(SAVED_KEY));
+    setHydrated(true);
+  }, []);
+
+  {/* when plan change store in localStorage */}
+  useEffect(() => {
+    if (!hydrated) return;
+    window.localStorage.setItem(PLAN_KEY, JSON.stringify(plan));
+  }, [plan, hydrated]);
+
+  {/* when saved change store in localStorage */}
+  useEffect(() => {
+    if (!hydrated) return;
+    window.localStorage.setItem(SAVED_KEY, JSON.stringify(saved));
+  }, [saved, hydrated]);
+
+
 
   const isInPlan = (id: string | number) =>
     plan.some((p) => String(p.id) === String(id));
@@ -28,41 +66,41 @@ export function PlanProvider({ children }: { children: ReactNode }) {
 
   const addToPlan = (workout: Workout) => {
     if (isInPlan(workout.id)) {
-      alert("Already in today's plan");
+      showToast("Already in today's plan");
       return;
     }
     if (plan.length >= PLAN_CAP) {
-      alert("Today's plan is full (max 5).");
+      showToast("Today's plan is full (max 5).");
       return;
     }
     setPlan((prev) => [...prev, { ...workout, addedAt: Date.now() }]);
-    alert("Added to today's plan ✅");
+    showToast("Added to today's plan ✅");
   };
 
   const addToSaved = (workout: Workout) => {
     if (isSaved(workout.id)) {
-      alert("Already saved");
+      showToast("Already saved");
       return;
     }
     setSaved((prev) => [...prev, { ...workout, addedAt: Date.now() }]);
-    alert("Saved for later ✅");
+    showToast("Saved for later ✅");
   };
 
   const markDone = (id: string | number) => {
     setPlan((prev) =>
       prev.map((p) => (String(p.id) === String(id) ? { ...p, done: true } : p))
     );
-    alert("Marked as done ✅");
+    showToast("Marked as done ✅");
   };
 
   const removeFromPlan = (id: string | number) => {
     setPlan((prev) => prev.filter((p) => String(p.id) !== String(id)));
-    alert("Removed from plan");
+    showToast("Removed from plan");
   };
 
   const removeFromSaved = (id: string | number) => {
     setSaved((prev) => prev.filter((s) => String(s.id) !== String(id)));
-    alert("Removed from saved");
+    showToast("Removed from saved");
   };
 
   return (
