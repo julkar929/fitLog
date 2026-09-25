@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <>
     <Hero />
-     <section id="library" className="mx-auto max-w-7xl px-5 py-16">
+     <section id="library" className="mx-auto max-w-5xl px-5 py-16">
         {/* Header */}
         <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
@@ -73,7 +73,7 @@ export default function Home() {
         )}
     
         {/* main grid part */}
-        {!loading && !error && (<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {!loading && !error && (<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {sorted.map((w) => (
           <WorkoutCard key={w.id} workout={w} />
             ))}
