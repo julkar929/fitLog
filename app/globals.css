@@ -41,6 +41,10 @@ html, body {
 @keyframes spin-slow { to { transform: rotate(360deg); } }
 .animate-spin-slow { animation: spin-slow 1s linear infinite; }
 
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+.animate-spin-slow { animation: spin-slow 1s linear infinite;}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-base); }
