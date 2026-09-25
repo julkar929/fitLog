@@ -7,7 +7,7 @@ import { getAllWorkouts } from "@/lib/api";
 import { Workout } from "@/lib/types";
 import { useEffect, useState } from "react";
 
-export default async function Home() {
+export default function Home() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
